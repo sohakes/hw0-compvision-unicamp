@@ -6,7 +6,7 @@ import numpy as np
 # Rafael Mariottini Tomazela     RA:192803 
 ############################################
 
-DEBUG = False
+DEBUG = True
 
 def Questao2(r,g,b):
     #merge back but changint red and blue
