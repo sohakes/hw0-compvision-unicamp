@@ -6,7 +6,7 @@ import numpy as np
 # Rafael Mariottini Tomazela     RA:192803 
 ############################################
 
-DEBUG = True
+DEBUG = False
 
 def Questao2(r,g,b):
     #merge back but changint red and blue
@@ -25,6 +25,9 @@ def Questao2(r,g,b):
     cv2.imwrite('output/p0-2-c-0.png', r)
 
 def Questao3(r,g,b):
+    # take the center square region
+    squareregion = 100
+    
     answer = g
     other = r
 
@@ -34,10 +37,10 @@ def Questao3(r,g,b):
 
     (rows, cols) = answer.shape
 
-    swidth = int(rows/2 - 50)
-    ewidth = swidth + 100
-    sheight = int(cols/2 - 50)
-    eheight = sheight + 100
+    swidth = int(rows/2 - squareregion/2)
+    ewidth = swidth + squareregion
+    sheight = int(cols/2 - squareregion/2)
+    eheight = sheight + squareregion
 
     Bout[swidth:ewidth, sheight:eheight] = A[swidth:ewidth, sheight:eheight]
 
