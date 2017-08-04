@@ -6,5 +6,5 @@ all:
 	  --env DISPLAY=${DISPLAY} --volume="/tmp/.X11-unix:/tmp/.X11-unix:rw" \
 	  -v=$(DIR)/..:$(DIR)/.. -w=$(DIR) \
 	  adnrv/opencv \
-	  python $(DIR)/src/hw0.py;
+	  python3 $(DIR)/src/hw0.py;
 	echo Running p0-XX-YY
