@@ -12,15 +12,15 @@ def Questao2(r,g,b):
     #merge back but changint red and blue
     imgswaprb = cv2.merge((r, g, b))
 
-    #show and save
+    #show and save // letter a
     if DEBUG == True : debug('image', imgswaprb)
     cv2.imwrite('output/p0-2-a-0.png', imgswaprb)
 
-    #green channel img / show and save
+    #green channel img / show and save // letter b
     if DEBUG == True : debug('image', g)
     cv2.imwrite('output/p0-2-b-0.png', g)
 
-    #red channel img /show and save
+    #red channel img /show and save // letter c
     if DEBUG == True : debug('image', r)
     cv2.imwrite('output/p0-2-c-0.png', r)
 
@@ -54,22 +54,25 @@ def Questao3(r,g,b):
     if DEBUG == True : debug('imgchangedred', imgchangedred)
     cv2.imwrite('output/p0-3-b-0.png', imgchangedred)
 
+def Questao4(r,g,b):
+    # letter a
     print("Min of green channel: %.2f" % g.min())
     print("Max of green channel: %.2f" % g.max())
     print("Mean of green channel: %.2f" % g.mean())
     print("Std of green channel: %.2f" % g.std())
 
-def Questao4(r,g,b):
+
+    # letter b
     #normalize g
     gmean = float(g.mean())
     gstd = float(g.std())
 
     ng = g.astype(float)
 
-    ng = ng - gmean
-    ng /= gstd
-    ng *= 10
-    ng += gmean
+    ng = ng - gmean # That is, subtract the mean from all pixels
+    ng /= gstd # Then divide them by the standard deviation  
+    ng *= 10 #  Then multiply by 10 
+    ng += gmean # Now add the mean back to each pixel
 
     ngout = ng.astype(int)
     if DEBUG == True : debug('ng', ngout)
@@ -77,32 +80,35 @@ def Questao4(r,g,b):
 
     print("The colors of the image are smoother")
 
+    # letter c
     #roll the green channel
-    shiftedgreen = np.roll(g, 2, axis=1)
+    shiftedgreen = np.roll(g, 2, axis=1) #   Shift img-green to the left by 2 pixels
 
     #subtract
-    resultsubshift = g - shiftedgreen
+    resultsubshift = g - shiftedgreen #  Subtract the shifted version to the original, and save the difference image 
     if resultsubshift.min() < 0:
         resultsubshift += resultsubshift.min()
  
-    if DEBUG == True : debug('shiftedgreen',resultsubshift)
+    if DEBUG == True : debug('shiftedgreen',resultsubshift) 
     cv2.imwrite('output/p0-4-c-0.png', resultsubshift)
 
     print("A imagem subtraida tem principalmente as bordas, porque eh onde muda de cor.. acho")
 
 
 def Questao5(r,g,b):
-    #Question 5
     #create a matrix of the same size by copying
     gaussian_noise = g.copy()
     cv2.randn(gaussian_noise, 0, 30);
 
-    #add to the img
-    noisy_g = g + gaussian_noise
+    # letter a
+    # add Gaussian noise to the pixels in the green channel
+    noisy_g = g + gaussian_noise 
     noisy_imgg = cv2.merge((b, noisy_g, r))
     if DEBUG == True : debug('noisy_imgg',noisy_imgg)
     cv2.imwrite('output/p0-5-a-0.png', noisy_imgg)
 
+    #letter b
+    # add the noise using the same sigma to the blue
     noisy_b = b + gaussian_noise
     noisy_imgb = cv2.merge((noisy_b, g, r))
     if DEBUG == True : debug('noisy_imgg',noisy_imgg)
