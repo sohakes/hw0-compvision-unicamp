@@ -3,10 +3,10 @@ import numpy as np
 
 ################  HW0  #####################
 # Nathana Facion                 RA:191079
-# Rafael Mariottini Tomazela     RA:192803 
+# Rafael Mariottini Tomazela     RA:192803
 ############################################
 
-DEBUG = True
+DEBUG = False
 
 def Questao2(r,g,b):
     #merge back but changint red and blue
@@ -27,7 +27,7 @@ def Questao2(r,g,b):
 def Questao3(r,g,b):
     # take the center square region
     squareregion = 100
-    
+
     answer = g
     other = r
 
@@ -70,30 +70,24 @@ def Questao4(r,g,b):
     ng = g.astype(float)
 
     ng = ng - gmean # That is, subtract the mean from all pixels
-    ng /= gstd # Then divide them by the standard deviation  
-    ng *= 10 #  Then multiply by 10 
+    ng /= gstd # Then divide them by the standard deviation
+    ng *= 10 #  Then multiply by 10
     ng += gmean # Now add the mean back to each pixel
 
     ngout = ng.astype(int)
     if DEBUG == True : debug('ng', ngout)
     cv2.imwrite('output/p0-4-b-0.png', ngout)
 
-    print("The colors of the image are smoother")
-
     # letter c
     #roll the green channel
     shiftedgreen = np.roll(g, 2, axis=1) #   Shift img-green to the left by 2 pixels
 
     #subtract
-    resultsubshift = g - shiftedgreen #  Subtract the shifted version to the original, and save the difference image 
-    if resultsubshift.min() < 0:
-        resultsubshift += resultsubshift.min()
- 
-    if DEBUG == True : debug('shiftedgreen',resultsubshift) 
+    resultsubshift = g - shiftedgreen #  Subtract the shifted version to the original, and save the difference image
+    resultsubshift[resultsubshift < 0] = 0
+
+    if DEBUG == True : debug('shiftedgreen',resultsubshift)
     cv2.imwrite('output/p0-4-c-0.png', resultsubshift)
-
-    print("A imagem subtraida tem principalmente as bordas, porque eh onde muda de cor.. acho")
-
 
 def Questao5(r,g,b):
     #create a matrix of the same size by copying
@@ -102,7 +96,7 @@ def Questao5(r,g,b):
 
     # letter a
     # add Gaussian noise to the pixels in the green channel
-    noisy_g = g + gaussian_noise 
+    noisy_g = g + gaussian_noise
     noisy_imgg = cv2.merge((b, noisy_g, r))
     if DEBUG == True : debug('noisy_imgg',noisy_imgg)
     cv2.imwrite('output/p0-5-a-0.png', noisy_imgg)
@@ -123,7 +117,7 @@ def debug(name,img):
 def main():
     #Loads color image
     img = cv2.imread('input/p0-1-0.png')
-    
+
     #split into channels
     b,g,r = cv2.split(img)
 
@@ -135,4 +129,3 @@ def main():
 
 if __name__ == '__main__':
    main()
-
